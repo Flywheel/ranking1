@@ -1,58 +1,73 @@
-{{ballotStore.contests().length}}
 @for (item of ballotStore.contests(); track $index) {
-  <p>{{item.contestTitle}}</p>
+  <p>{{ item.contestTitle }}</p>
 }
 
 <div class="topic-container">
-    <div
-      cdkDropList
-      #rankedList="cdkDropList"
-      id="rankedDropList"
-      [class.border-on-empty]="candidatesRanked().length === 0"
-      [cdkDropListData]="candidatesRanked()"
-      [cdkDropListConnectedTo]="[availableList]"
-      (cdkDropListDropped)="drop($event)"
-    >
-      <div class="topic-list ranked">
-        @for (ranked of candidatesRanked(); track ranked.id ) {
+  <div
+    cdkDropList
+    #rankedList="cdkDropList"
+    id="rankedDropList"
+    [class.border-on-empty]="candidatesRanked().length === 0"
+    [cdkDropListData]="candidatesRanked()"
+    [cdkDropListConnectedTo]="[availableList]"
+    (cdkDropListDropped)="drop($event)">
+    <div class="topic-list ranked">
+      @for (ranked of candidatesRanked(); track ranked.id) {
         <div cdkDrag class="topic" id="cand-{{ ranked.candidateId }}" [attr.tabindex]="ranked.candidateId">
-          <span class="move-topic-up" cdkDragHandle (click)="moveUpOnePosition(ranked)" (keydown)="moveUpOnePosition(ranked)" tabindex="1">
-            @if ($index !== 0) { &#8593; }
+          <span
+            class="move-topic-up"
+            cdkDragHandle
+            (click)="moveUpOnePosition(ranked)"
+            (keydown)="moveUpOnePosition(ranked)"
+            tabindex="1">
+            @if ($index !== 0) {
+              &#8593;
+            }
           </span>
           <span class="sort-handle" cdkDragHandle></span>
           <span class="topic-index" cdkDragHandle>{{ $index + 1 }}</span>
-          <span class="topic-name" cdkDragHandle [routerLink]="['/content', ranked.candidateId]">{{ ranked.candidateName }}</span>
+          <span class="topic-name" cdkDragHandle [routerLink]="['/content', ranked.candidateId]">{{
+            ranked.candidateName
+          }}</span>
           <button class="move-topic-down" (click)="moveDownOnePosition(ranked)">&#8595;</button>
         </div>
-        } @empty {
-       <p>Instructions Go Here</p>
-        }
-      </div>
-    </div>
-    @if (candidatesAvailable().length !== 0) {
-    <div class="streamHeaderCaption">
-      <span>-</span>
-      <span>Candidates for {{ ballotStore.contest().contestTitle}}</span>
-      <span>-</span>
-    </div>
-    }
-  
-    <div
-      cdkDropList
-      #availableList="cdkDropList"
-      id="availableDropList"
-      [cdkDropListData]="candidatesAvailable()"
-      [cdkDropListConnectedTo]="[rankedList]"
-      (cdkDropListDropped)="drop($event)"
-    >
-      <div class="topic-list recommended">
-        @for (unranked of candidatesAvailable(); track unranked; let theCount = $count ) {
-        <div cdkDrag class="topic" (click)="moveToSelected(unranked)" (keydown)="moveToSelected(unranked)" [attr.tabindex]="unranked.candidateId">
-          <a class="topic-unranked" [routerLink]="false ? ['/content', unranked.candidateId] : null">{{ unranked.candidateName }}</a>
-          <span class="add-topic"></span>
-        </div>
-        } @empty { Finished all {{ ballotStore.contestSlate().slateMemberViews.length }} candidates for {{ ballotStore.contest().contestTitle}}. 
-        }
-      </div>
+      } @empty {
+        <p>Instructions Go Here</p>
+      }
     </div>
   </div>
+  @if (candidatesAvailable().length !== 0) {
+    <div class="streamHeaderCaption">
+      <span>-</span>
+      <span>Candidates for {{ ballotStore.contest().contestTitle }}</span>
+      <span>-</span>
+    </div>
+  }
+
+  <div
+    cdkDropList
+    #availableList="cdkDropList"
+    id="availableDropList"
+    [cdkDropListData]="candidatesAvailable()"
+    [cdkDropListConnectedTo]="[rankedList]"
+    (cdkDropListDropped)="drop($event)">
+    <div class="topic-list recommended">
+      @for (unranked of candidatesAvailable(); track unranked; let theCount = $count) {
+        <div
+          cdkDrag
+          class="topic"
+          (click)="moveToSelected(unranked)"
+          (keydown)="moveToSelected(unranked)"
+          [attr.tabindex]="unranked.candidateId">
+          <a class="topic-unranked" [routerLink]="false ? ['/content', unranked.candidateId] : null">{{
+            unranked.candidateName
+          }}</a>
+          <span class="add-topic"></span>
+        </div>
+      } @empty {
+        Finished all {{ ballotStore.contestSlate().slateMemberViews.length }} candidates for
+        {{ ballotStore.contest().contestTitle }}.
+      }
+    </div>
+  </div>
+</div>
