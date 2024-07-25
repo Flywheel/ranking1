@@ -22,6 +22,7 @@ import { RouterLink } from '@angular/router';
 export class BallotPageComponent implements OnInit {
   ballotStore = inject(BallotStore);
   id = input<string>();
+  selectedContest = signal<string>('');
 
   candidatesAvailable = signal<SlateMemberView[]>([]);
   candidatesRanked = signal<SlateMemberView[]>([]);

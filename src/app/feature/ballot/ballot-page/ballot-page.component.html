@@ -1,6 +1,16 @@
-@for (item of ballotStore.contests(); track $index) {
-  <p>{{ item.contestTitle }}</p>
-}
+<div class="horizontal-scroll-container">
+  @for (contest of ballotStore.contests(); track $index) {
+    <div
+      [id]="'menu-item:' + contest.id"
+      class="menu-item"
+      [class.selected]="contest.id.toString() === selectedContest()"
+      (click)="loadContestById(contest.id)"
+      (keydown)="loadContestById(contest.id)"
+      tabindex="0">
+      {{ contest.contestTitle }}
+    </div>
+  }
+</div>
 
 <div class="topic-container">
   <div
@@ -32,7 +42,7 @@
           <button class="move-topic-down" (click)="moveDownOnePosition(ranked)">&#8595;</button>
         </div>
       } @empty {
-        <p>Instructions Go Here</p>
+        <p>Drag and reorder candidates here</p>
       }
     </div>
   </div>
