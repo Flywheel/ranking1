@@ -14,7 +14,7 @@
   }
 </div>
 
-<div class="topic-container">
+<div class="candidate-container">
   <div
     cdkDropList
     #rankedList="cdkDropList"
@@ -23,11 +23,11 @@
     [cdkDropListData]="candidatesRanked()"
     [cdkDropListConnectedTo]="[availableList]"
     (cdkDropListDropped)="drop($event)">
-    <div class="topic-list ranked">
+    <div class="candidate-list ranked">
       @for (ranked of candidatesRanked(); track ranked.id) {
-        <div cdkDrag class="topic" id="cand-{{ ranked.candidateId }}" [attr.tabindex]="ranked.candidateId">
+        <div cdkDrag class="candidate" id="cand-{{ ranked.candidateId }}" [attr.tabindex]="ranked.candidateId">
           <span
-            class="move-topic-up"
+            class="move-candidate-up"
             cdkDragHandle
             (click)="moveUpOnePosition(ranked)"
             (keydown)="moveUpOnePosition(ranked)"
@@ -37,11 +37,11 @@
             }
           </span>
           <span class="sort-handle" cdkDragHandle></span>
-          <span class="topic-index" cdkDragHandle>{{ $index + 1 }}</span>
-          <span class="topic-name" cdkDragHandle [routerLink]="['/content', ranked.candidateId]">{{
+          <span class="candidate-index" cdkDragHandle>{{ $index + 1 }}</span>
+          <span class="candidate-ranked" cdkDragHandle [routerLink]="['/content', ranked.candidateId]">{{
             ranked.candidateName
           }}</span>
-          <button class="move-topic-down" (click)="moveDownOnePosition(ranked)">&#8595;</button>
+          <button class="move-candidate-down" (click)="moveDownOnePosition(ranked)">&#8595;</button>
         </div>
       } @empty {
         <p>Drag and reorder candidates here</p>
@@ -49,7 +49,7 @@
     </div>
   </div>
   @if (candidatesAvailable().length !== 0) {
-    <div class="streamHeaderCaption">
+    <div class="contestTitle">
       <span>Candidates for {{ contestTitle }}</span>
     </div>
   }
@@ -61,18 +61,18 @@
     [cdkDropListData]="candidatesAvailable()"
     [cdkDropListConnectedTo]="[rankedList]"
     (cdkDropListDropped)="drop($event)">
-    <div class="topic-list recommended">
+    <div class="candidate-list available">
       @for (unranked of candidatesAvailable(); track unranked; let theCount = $count) {
         <div
           cdkDrag
-          class="topic"
+          class="candidate"
           (click)="moveToSelected(unranked)"
           (keydown)="moveToSelected(unranked)"
           [attr.tabindex]="unranked.candidateId">
-          <a class="topic-unranked" [routerLink]="false ? ['/content', unranked.candidateId] : null">{{
+          <a class="candidate-unranked" [routerLink]="false ? ['/content', unranked.candidateId] : null">{{
             unranked.candidateName
           }}</a>
-          <span class="add-topic"></span>
+          <span class="add-candidate"></span>
         </div>
       } @empty {
         Finished all {{ ballotStore.contestSlate().slateMemberViews.length }} candidates for
