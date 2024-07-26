@@ -138,12 +138,14 @@ export class BallotPageComponent implements OnInit {
         content: slateMember.content,
       };
     });
-    // this.preparedBallot.set({
-    //   id: this.pitchStore.currentPitchView().slate.id,
-    //   contestId: this.selectedPitchId(),
-    //   authorId: this.authorStore.authorHandle().id,
-    //   slateMemberViews: preparedSlateMemberViews,
-    // });
-    // this.ballotStore.updateSlate(this.preparedBallot());
+    this.preparedBallot.set({
+      id: this.candidatesRanked()[0].contestId,
+      contestId: this.candidatesRanked()[0].contestId,
+      authorId: 1,
+      slateMemberViews: preparedSlateMemberViews,
+    });
+    console.log(this.preparedBallot());
+    this.ballotStore.updateVoterSlate(this.preparedBallot());
+    console.log(this.ballotStore.authorSlates());
   }
 }

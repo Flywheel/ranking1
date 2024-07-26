@@ -6,7 +6,6 @@ import { computed, inject } from '@angular/core';
 
 const emptycontest: ContestView = {
   id: 0,
-  // slateId: 1,
   opens: new Date('1922-01-03'),
   closes: new Date('1922-01-04'),
   topSlateId: 0,
@@ -68,22 +67,26 @@ export const BallotStore = signalStore(
 
       async getVoterSlateByContestId(contestId: number) {
         const voterSlates: SlateView[] = store.authorSlates() ?? [];
+        console.log(voterSlates);
         const currentVoterSlate: SlateView = voterSlates.filter(a => a.contestId === contestId)[0] ?? emptySlateView;
         console.log(currentVoterSlate);
         updateState(store, `[Ballot] getCurrentVoterSlateByContestId Success, ${contestId}`, {
           voterSlate: currentVoterSlate,
+          authorSlates: voterSlates,
         });
       },
 
       async updateVoterSlate(ballot: SlateView) {
+        console.log(ballot);
         let updatedAuthorSlates = store.authorSlates();
+        console.log(updatedAuthorSlates);
         const slateExists = updatedAuthorSlates.some(b => b.contestId === ballot.contestId);
         if (slateExists) {
           updatedAuthorSlates = updatedAuthorSlates.map(b => (b.contestId === ballot.contestId ? ballot : b));
         } else {
           updatedAuthorSlates = [...updatedAuthorSlates, ballot];
         }
-
+        console.log(updatedAuthorSlates);
         updateState(store, `[Ballot] UpdateSlate Success Contest/Ballot: ${ballot.contestId}/${ballot.id} `, {
           authorSlates: updatedAuthorSlates,
           voterSlate: ballot,
