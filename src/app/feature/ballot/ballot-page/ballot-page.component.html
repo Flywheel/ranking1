@@ -1,5 +1,7 @@
+@let contestTitle = ballotStore.currentContest().contestTitle;
+
 <div class="horizontal-scroll-container">
-  @for (contest of ballotStore.contests(); track $index) {
+  @for (contest of ballotStore.allContests(); track $index) {
     <div
       [id]="'menu-item:' + contest.id"
       class="menu-item"
@@ -48,9 +50,7 @@
   </div>
   @if (candidatesAvailable().length !== 0) {
     <div class="streamHeaderCaption">
-      <span>-</span>
-      <span>Candidates for {{ ballotStore.contest().contestTitle }}</span>
-      <span>-</span>
+      <span>Candidates for {{ contestTitle }}</span>
     </div>
   }
 
@@ -76,7 +76,7 @@
         </div>
       } @empty {
         Finished all {{ ballotStore.contestSlate().slateMemberViews.length }} candidates for
-        {{ ballotStore.contest().contestTitle }}.
+        {{ ballotStore.currentContest().contestTitle }}.
       }
     </div>
   </div>

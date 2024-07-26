@@ -1,5 +1,5 @@
-import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
-import { ContestView, SlateMemberView, SlateView } from '../models';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { SlateMemberView, SlateView } from '../models';
 import {
   CdkDrag,
   CdkDragHandle,
@@ -11,6 +11,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { BallotStore } from '../ballot.store';
 import { RouterLink } from '@angular/router';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-ballot-page',
@@ -28,19 +29,18 @@ export class BallotPageComponent implements OnInit {
   candidatesRanked = signal<SlateMemberView[]>([]);
 
   preparedBallot = signal<SlateView>({ id: 0, contestId: 0, authorId: 0, slateMemberViews: [] });
+  isReady$ = toObservable(this.ballotStore.isStartupLoadingComplete);
 
-  async ngOnInit() {
-    await this.ballotStore.getAllContests();
+  ngOnInit() {
     const ballotId = this.id() ? Number(this.id()) : 1;
-    console.log(ballotId);
-
-    await this.loadContestById(ballotId);
+    this.isReady$.subscribe(completed => {
+      if (completed) {
+        this.loadContestById(ballotId);
+      }
+    });
   }
 
   async loadContestById(contestId: number) {
-    //await this.ballotStore.getAllContests();
-    //   await this.pitchStore.loadPitchViewByPitchId(pitchId);
-    console.log(this.ballotStore.contests());
     await this.ballotStore.getContestSlateByContestId(contestId);
     await this.ballotStore.getVoterSlateByContestId(contestId);
     this.setAvailableCandidates();
@@ -48,13 +48,7 @@ export class BallotPageComponent implements OnInit {
   }
 
   setAvailableCandidates() {
-    // this.candidatesAvailable.set(this.pitchStore.currentPitchView().slate.slateMemberViews);
     this.candidatesAvailable.set(this.ballotStore.contestSlate().slateMemberViews);
-    const rankedCandidatesIds = new Set(
-      this.ballotStore.voterSlate().slateMemberViews.map(candidate => candidate.candidateId)
-    );
-    console.log(rankedCandidatesIds);
-
     if (this.ballotStore.voterSlate()?.slateMemberViews) {
       this.candidatesRanked.set(
         this.ballotStore
@@ -127,6 +121,7 @@ export class BallotPageComponent implements OnInit {
   }
 
   updateCurrentSlateSignal() {
+    if (this.candidatesRanked().length === 0) return;
     const preparedSlateMemberViews: SlateMemberView[] = this.candidatesRanked().map((slateMember, index: number) => {
       return {
         id: slateMember.id,
@@ -144,8 +139,6 @@ export class BallotPageComponent implements OnInit {
       authorId: 1,
       slateMemberViews: preparedSlateMemberViews,
     });
-    console.log(this.preparedBallot());
     this.ballotStore.updateVoterSlate(this.preparedBallot());
-    console.log(this.ballotStore.authorSlates());
   }
 }
