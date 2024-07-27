@@ -1,4 +1,7 @@
 @let contestTitle = ballotStore.currentContest().contestTitle;
+@if (ballotStore.isLoading()) {
+  <div class="loading">Loading...</div>
+}
 
 <div class="horizontal-scroll-container">
   @for (contest of ballotStore.allContests(); track $index) {
@@ -38,19 +41,28 @@
           </span>
           <span class="sort-handle" cdkDragHandle></span>
           <span class="candidate-index" cdkDragHandle>{{ $index + 1 }}</span>
-          <span class="candidate-ranked" cdkDragHandle [routerLink]="['/content', ranked.candidateId]">{{
-            ranked.candidateName
-          }}</span>
+          <span
+            class="candidate-ranked"
+            cdkDragHandle
+            [routerLink]="['/content', ranked.asset.mediaType + '.^.' + ranked.asset.location]"
+            >{{ ranked.candidateName }}</span
+          >
           <button class="move-candidate-down" (click)="moveDownOnePosition(ranked)">&#8595;</button>
         </div>
       } @empty {
-        <p>Drag and reorder candidates here</p>
+        <p>Ready to accept your preferences for {{ contestTitle }}.</p>
+        <p>Drag and reorder candidates here.</p>
       }
     </div>
   </div>
   @if (candidatesAvailable().length !== 0) {
     <div class="contestTitle">
-      <span>Candidates for {{ contestTitle }}</span>
+      <span>-</span>
+      <span
+        >Candidates for {{ contestTitle }}. Contest Closes:
+        {{ ballotStore.currentContest().closes | date: 'E M/d/yyyy' }}</span
+      >
+      <span>-</span>
     </div>
   }
 

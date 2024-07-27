@@ -12,11 +12,12 @@ import {
 import { BallotStore } from '../ballot.store';
 import { RouterLink } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ballot-page',
   standalone: true,
-  imports: [CdkDrag, CdkDropList, CdkDropListGroup, CdkDragHandle, RouterLink],
+  imports: [CdkDrag, CdkDropList, CdkDropListGroup, CdkDragHandle, RouterLink, CommonModule],
   templateUrl: './ballot-page.component.html',
   styleUrl: './ballot-page.component.scss',
 })
@@ -43,6 +44,7 @@ export class BallotPageComponent implements OnInit {
   async loadContestById(contestId: number) {
     await this.ballotStore.getContestSlateByContestId(contestId);
     await this.ballotStore.getVoterSlateByContestId(contestId);
+    this.selectedContest.set(contestId.toString());
     this.setAvailableCandidates();
     this.updateCurrentSlateSignal();
   }
@@ -131,6 +133,7 @@ export class BallotPageComponent implements OnInit {
         candidateName: slateMember.candidateName,
         rankOrder: index + 1,
         content: slateMember.content,
+        asset: slateMember.asset,
       };
     });
     this.preparedBallot.set({

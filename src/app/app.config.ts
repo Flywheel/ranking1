@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, isDevMode } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DbService } from './core/data/db.service';
 import { routes } from './app.routes';
@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
       InMemoryWebApiModule.forRoot(DbService, { delay: 1, dataEncapsulation: false, passThruUnknownUrl: true })
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
     provideStore(),
     provideStoreDevtools({ maxAge: 5, logOnly: !isDevMode() }),
   ],
