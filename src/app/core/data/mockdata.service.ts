@@ -20,8 +20,8 @@ export class MockdataService {
     {
       id: 2,
       authorId: 1,
-      contestTitle: 'Dem MiniPrimary 2024',
-      contestDescription: 'Candidates for Democratic Nominee',
+      contestTitle: 'Dem VP 2024',
+      contestDescription: 'Candidates for Democratic VP Nominee',
       topSlateId: 2,
       opens: new Date('2024-01-01'),
       closes: new Date('2024-11-01'),

@@ -28,7 +28,7 @@ export class ViewerComponent {
       return prepAssetView;
     }
     // test console.log('assetData2', { mediaType: '', location: '', url: '', paddingBottom: '' });
-    return { mediaType: '', sourceId: '', url: '', paddingBottom: '' };
+    return { mediaType: 'Error', sourceId: 'Url has input id', url: '', paddingBottom: 'ERROR ABOVE' };
   });
 
   sanitizer = inject(DomSanitizer);

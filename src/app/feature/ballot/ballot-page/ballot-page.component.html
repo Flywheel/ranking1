@@ -28,6 +28,7 @@
     (cdkDropListDropped)="drop($event)">
     <div class="candidate-list ranked">
       @for (ranked of candidatesRanked(); track ranked.id) {
+        @let assetParams = ranked.asset.mediaType + '..i..' + ranked.asset.sourceId;
         <div cdkDrag class="candidate" id="cand-{{ ranked.candidateId }}" [attr.tabindex]="ranked.candidateId">
           <span
             class="move-candidate-up"
@@ -41,11 +42,8 @@
           </span>
           <span class="sort-handle" cdkDragHandle></span>
           <span class="candidate-index" cdkDragHandle>{{ $index + 1 }}</span>
-          <span
-            class="candidate-ranked"
-            cdkDragHandle
-            [routerLink]="['/content', ranked.asset.mediaType + '..i..' + ranked.asset.sourceId]"
-            >{{ ranked.candidateName }}</span
+          <span class="candidate-ranked" cdkDragHandle [routerLink]="['/content', assetParams]">
+            {{ ranked.candidateName }}</span
           >
           <button class="move-candidate-down" (click)="moveDownOnePosition(ranked)">&#8595;</button>
         </div>
@@ -92,4 +90,10 @@
       }
     </div>
   </div>
+</div>
+
+<div>
+  <p>App-Viewer</p>
+  <app-viewer [id]="'youtube..i..URG4bYES91E'"></app-viewer>
+  >
 </div>
