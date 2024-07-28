@@ -12,8 +12,6 @@ import { MediaParserService } from '../../../core/media/media-parser.service';
 })
 export class ViewerComponent {
   id = input<string>();
-  location = inject(Location); //  from '@angular/common' for back button
-  sanitizer = inject(DomSanitizer);
   mediaService = inject(MediaParserService);
 
   // deserialize data from id into Asset object containing mediaType and location, then get url and paddingBottom
@@ -21,9 +19,9 @@ export class ViewerComponent {
     const assetInput = this.id();
     // test console.log('ViewerComponent initialized with id:', this.id());
     if (assetInput) {
-      const p1 = assetInput.indexOf('..i..');
-      const mediaType = assetInput.substring(0, p1);
-      const location = assetInput.substring(p1 + 5);
+      const pos = assetInput.indexOf('..i..');
+      const mediaType = assetInput.substring(0, pos);
+      const location = assetInput.substring(pos + 5);
       const prepAssetView = this.mediaService.parseMedia({ mediaType, sourceId: location });
 
       // test console.log('assetData2', assetData, '; url', url, '; paddingBottom', paddingBottom);
@@ -33,11 +31,14 @@ export class ViewerComponent {
     return { mediaType: '', sourceId: '', url: '', paddingBottom: '' };
   });
 
+  sanitizer = inject(DomSanitizer);
   sanitizedUrl = computed(() => this.sanitizer.bypassSecurityTrustResourceUrl(this.assetData().url));
 
+  location = inject(Location); //  from '@angular/common' for back button
   goBack() {
     this.location.back();
   }
+
   logGen() {
     console.log(this.assetData());
   }

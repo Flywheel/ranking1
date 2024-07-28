@@ -5,7 +5,7 @@ import { Contest, SlateMemberView, ContestView, SlateView } from '../../feature/
   providedIn: 'root',
 })
 export class MockdataService {
-  demvp24LocalStore = '../assets/demvp24/';
+  demvp24LocalStore = '../../assets/contests/demvp24/';
 
   public contestData: Contest[] = [
     {

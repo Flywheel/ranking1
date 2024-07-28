@@ -27,6 +27,7 @@ export class MediaParserService {
         break;
       case 'jpeg':
       case 'jpg-280':
+      case 'image':
         paddingBottom = '0%';
         url = asset.sourceId;
         break;

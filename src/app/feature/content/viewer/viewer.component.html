@@ -2,10 +2,7 @@
   <a (click)="goBack()" (keydown)="goBack()" tabindex="0"> Done </a>
   <span class="title">Mini Herald</span>
 </div>
-<p>
-  {{ assetData().mediaType }} -
-  {{ assetData().sourceId }}
-</p>
+<p>{{ assetData().mediaType }} - {{ assetData().sourceId }}</p>
 <button (click)="logGen()">Log asset data to console.</button>
 
 <div class="content">
