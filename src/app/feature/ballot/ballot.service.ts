@@ -24,18 +24,4 @@ export class BallotService {
       }, 500);
     });
   }
-
-  // getContestViewById(id: number): Promise<ContestView> {
-  //   const url = `${this.contestAPIUrl}/${id}`;
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get<ContestView>(url).subscribe({
-  //       next: (data) => {
-  //         resolve(data);
-  //       },
-  //       error: (error) => {
-  //         reject(error);
-  //       },
-  //     });
-  //   });
-  // }
 }

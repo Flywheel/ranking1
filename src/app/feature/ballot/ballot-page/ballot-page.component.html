@@ -44,7 +44,7 @@
           <span
             class="candidate-ranked"
             cdkDragHandle
-            [routerLink]="['/content', ranked.asset.mediaType + '.^.' + ranked.asset.location]"
+            [routerLink]="['/content', ranked.asset.mediaType + '..i..' + ranked.asset.sourceId]"
             >{{ ranked.candidateName }}</span
           >
           <button class="move-candidate-down" (click)="moveDownOnePosition(ranked)">&#8595;</button>

@@ -16,7 +16,15 @@ export interface Contest {
 
 export interface Asset {
   mediaType: string;
-  location: string;
+  sourceId: string;
+}
+export interface AssetView extends Asset {
+  url: string;
+  paddingBottom: string;
+}
+export interface AssetView extends Asset {
+  url: string;
+  paddingBottom: string;
 }
 
 // export interface Slate {
@@ -32,13 +40,7 @@ export interface Asset {
 //   rankOrder: number;
 // }
 
-export interface ContestView {
-  id: number;
-  opens: Date;
-  closes: Date;
-  topSlateId: number;
-  contestTitle: string;
-  contestDescription: string;
+export interface ContestView extends Contest {
   slate: SlateView;
 }
 
@@ -49,7 +51,7 @@ export interface SlateMemberView {
   candidateId: number;
   candidateName: string;
   rankOrder: number;
-  content: string;
+  content?: string;
   asset: Asset;
 }
 

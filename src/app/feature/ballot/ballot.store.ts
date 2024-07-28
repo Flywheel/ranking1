@@ -6,6 +6,7 @@ import { computed, inject } from '@angular/core';
 
 const emptycontest: ContestView = {
   id: 0,
+  authorId: 0,
   opens: new Date('1922-01-03'),
   closes: new Date('1922-01-04'),
   topSlateId: 0,

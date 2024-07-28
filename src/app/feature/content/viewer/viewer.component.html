@@ -2,5 +2,26 @@
   <a (click)="goBack()" (keydown)="goBack()" tabindex="0"> Done </a>
   <span class="title">Mini Herald</span>
 </div>
+<p>
+  {{ assetData().mediaType }} -
+  {{ assetData().sourceId }}
+</p>
+<button (click)="logGen()">Log asset data to console.</button>
 
-{{ id() }}
+<div class="content">
+  @switch (assetData().mediaType) {
+    @case ('image') {
+      <img [src]="sanitizedUrl()" alt="Content Image" />
+    }
+    @default {
+      <div class="container" [ngStyle]="{ 'padding-bottom': assetData().paddingBottom }">
+        <iframe
+          frameborder="4"
+          scrolling="no"
+          allowfullscreen
+          [src]="sanitizedUrl()"
+          allow="autoplay; encrypted-media"></iframe>
+      </div>
+    }
+  }
+</div>

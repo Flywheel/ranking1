@@ -5,7 +5,7 @@ import { Contest, SlateMemberView, ContestView, SlateView } from '../../feature/
   providedIn: 'root',
 })
 export class MockdataService {
-  localImgStore = '../assets/jpeg/goldwatch/';
+  demvp24LocalStore = '../assets/demvp24/';
 
   public contestData: Contest[] = [
     {
@@ -35,9 +35,8 @@ export class MockdataService {
       slateId: 1,
       candidateId: 1,
       rankOrder: 1,
-      content: 'Harris.jpg',
       candidateName: 'Kamala Harris',
-      asset: { mediaType: 'video', location: 'sHky_Xopyrw' },
+      asset: { mediaType: 'youtube', sourceId: 'sHky_Xopyrw' },
     },
     {
       id: 2,
@@ -45,9 +44,8 @@ export class MockdataService {
       slateId: 1,
       candidateId: 2,
       rankOrder: 2,
-      content: 'URG4bYES91E',
       candidateName: 'Robert Kennedy, Jr.',
-      asset: { mediaType: 'video', location: 'URG4bYES91E' },
+      asset: { mediaType: 'youtube', sourceId: 'URG4bYES91E' },
     },
     {
       id: 3,
@@ -55,9 +53,8 @@ export class MockdataService {
       slateId: 1,
       candidateId: 3,
       rankOrder: 3,
-      content: 'V3n8qmgNHZc',
       candidateName: 'Chase Oliver',
-      asset: { mediaType: 'video', location: 'V3n8qmgNHZc' },
+      asset: { mediaType: 'youtube', sourceId: 'V3n8qmgNHZc' },
     },
     {
       id: 4,
@@ -65,9 +62,8 @@ export class MockdataService {
       slateId: 1,
       candidateId: 4,
       rankOrder: 4,
-      content: '2KsIxLn7UO0',
       candidateName: 'Jill Stein',
-      asset: { mediaType: 'video', location: '2KsIxLn7UO0' },
+      asset: { mediaType: 'youtube', sourceId: '2KsIxLn7UO0' },
     },
     {
       id: 5,
@@ -75,9 +71,8 @@ export class MockdataService {
       slateId: 1,
       candidateId: 5,
       rankOrder: 5,
-      content: 't3J0iRz35jc',
       candidateName: 'Randall Terry',
-      asset: { mediaType: 'video', location: 't3J0iRz35jc' },
+      asset: { mediaType: 'youtube', sourceId: 't3J0iRz35jc' },
     },
     {
       id: 6,
@@ -85,9 +80,8 @@ export class MockdataService {
       slateId: 1,
       candidateId: 6,
       rankOrder: 6,
-      content: 'AcpjvVFAayo',
       candidateName: 'Donald Trump',
-      asset: { mediaType: 'video', location: 'AcpjvVFAayo' },
+      asset: { mediaType: 'youtube', sourceId: 'AcpjvVFAayo' },
     },
     {
       id: 7,
@@ -95,9 +89,8 @@ export class MockdataService {
       slateId: 1,
       candidateId: 7,
       rankOrder: 7,
-      content: 'LAZv9UZBDFg',
       candidateName: 'Cornel West',
-      asset: { mediaType: 'video', location: 'LAZv9UZBDFg' },
+      asset: { mediaType: 'youtube', sourceId: 'LAZv9UZBDFg' },
     },
     {
       id: 11,
@@ -105,9 +98,8 @@ export class MockdataService {
       slateId: 2,
       candidateId: 11,
       rankOrder: 1,
-      content: this.localImgStore + 'Beshear.png',
       candidateName: 'Andy Beshear',
-      asset: { mediaType: 'image', location: this.localImgStore + 'Beshear.png' },
+      asset: { mediaType: 'image', sourceId: this.demvp24LocalStore + 'Beshear.png' },
     },
     {
       id: 12,
@@ -115,9 +107,8 @@ export class MockdataService {
       slateId: 2,
       candidateId: 12,
       rankOrder: 2,
-      content: this.localImgStore + 'Cooper.png',
       candidateName: 'Roy Cooper',
-      asset: { mediaType: 'image', location: this.localImgStore + 'Cooper.png' },
+      asset: { mediaType: 'image', sourceId: this.demvp24LocalStore + 'Cooper.png' },
     },
     {
       id: 13,
@@ -125,9 +116,8 @@ export class MockdataService {
       slateId: 2,
       candidateId: 13,
       rankOrder: 3,
-      content: this.localImgStore + 'Kelly.png',
       candidateName: 'Mark Kelly',
-      asset: { mediaType: 'image', location: this.localImgStore + 'Kelly.png' },
+      asset: { mediaType: 'image', sourceId: this.demvp24LocalStore + 'Kelly.png' },
     },
     {
       id: 14,
@@ -135,9 +125,8 @@ export class MockdataService {
       slateId: 2,
       candidateId: 14,
       rankOrder: 4,
-      content: this.localImgStore + 'Moore.png',
       candidateName: 'Wes Moore',
-      asset: { mediaType: 'image', location: this.localImgStore + 'Moore.png' },
+      asset: { mediaType: 'image', sourceId: this.demvp24LocalStore + 'Moore.png' },
     },
     {
       id: 15,
@@ -145,9 +134,8 @@ export class MockdataService {
       slateId: 2,
       candidateId: 15,
       rankOrder: 5,
-      content: this.localImgStore + 'Polis.png',
       candidateName: 'Jared Polis',
-      asset: { mediaType: 'image', location: this.localImgStore + 'Polis.png' },
+      asset: { mediaType: 'image', sourceId: this.demvp24LocalStore + 'Polis.png' },
     },
     {
       id: 16,
@@ -155,9 +143,8 @@ export class MockdataService {
       slateId: 2,
       candidateId: 16,
       rankOrder: 6,
-      content: this.localImgStore + 'Pritzker.jpg',
       candidateName: 'J.B. Pritzker',
-      asset: { mediaType: 'image', location: this.localImgStore + 'Pritzker.jpg' },
+      asset: { mediaType: 'image', sourceId: this.demvp24LocalStore + 'Pritzker.jpg' },
     },
     {
       id: 17,
@@ -165,9 +152,8 @@ export class MockdataService {
       slateId: 2,
       candidateId: 17,
       rankOrder: 6,
-      content: this.localImgStore + 'Shapiro.png',
       candidateName: 'Josh Shapiro',
-      asset: { mediaType: 'image', location: this.localImgStore + 'Shapiro.png' },
+      asset: { mediaType: 'image', sourceId: this.demvp24LocalStore + 'Shapiro.png' },
     },
   ];
 
@@ -188,6 +174,7 @@ export class MockdataService {
       };
       return {
         id: contest.id,
+        authorId: contest.authorId,
         opens: contest.opens,
         closes: contest.closes,
         topSlateId: contest.topSlateId,
