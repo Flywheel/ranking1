@@ -4,6 +4,13 @@ import { ContestView, SlateView } from './models';
 import { BallotService } from './ballot.service';
 import { computed, inject } from '@angular/core';
 
+const emptySlateView: SlateView = {
+  id: 0,
+  contestId: 0,
+  authorId: 0,
+  slateMemberViews: [],
+};
+
 const emptycontest: ContestView = {
   id: 0,
   authorId: 0,
@@ -12,19 +19,7 @@ const emptycontest: ContestView = {
   topSlateId: 0,
   contestTitle: '',
   contestDescription: '',
-  slate: {
-    id: 0,
-    contestId: 0,
-    authorId: 0,
-    slateMemberViews: [],
-  },
-};
-
-const emptySlateView: SlateView = {
-  id: 0,
-  contestId: 0,
-  authorId: 0,
-  slateMemberViews: [],
+  slate: emptySlateView,
 };
 
 export const BallotStore = signalStore(
@@ -56,7 +51,7 @@ export const BallotStore = signalStore(
       },
 
       async getContestSlateByContestId(contestId: number) {
-        updateState(store, `[Ballot] getContestSlateByContestId Success, ${contestId}`, {
+        updateState(store, `[Ballot] getContestSlateByContestId Success`, {
           currentContest: store.allContests().filter(a => a.id === contestId)[0] ?? emptycontest,
           contestSlate: store.allContestSlates().filter(a => a.contestId === contestId)[0] ?? emptySlateView,
         });
@@ -65,13 +60,16 @@ export const BallotStore = signalStore(
       async getVoterSlateByContestId(contestId: number) {
         const voterSlates: SlateView[] = store.voterSlates() ?? [];
         const currentVoterSlate: SlateView = voterSlates.filter(a => a.contestId === contestId)[0] ?? emptySlateView;
-        updateState(store, `[Ballot] getCurrentVoterSlateByContestId Success, ${contestId}`, {
+        updateState(store, `[Ballot] getCurrentVoterSlateByContestId Success`, {
           voterSlate: currentVoterSlate,
           voterSlates: voterSlates,
         });
       },
 
       async updateVoterSlate(ballot: SlateView) {
+        updateState(store, `[Ballot] UpdateVoterSlate Start`, {
+          isLoading: true,
+        });
         let updatedAuthorSlates = store.voterSlates();
         const slateExists = updatedAuthorSlates.some(b => b.contestId === ballot.contestId);
         if (slateExists) {
@@ -79,9 +77,10 @@ export const BallotStore = signalStore(
         } else {
           updatedAuthorSlates = [...updatedAuthorSlates, ballot];
         }
-        updateState(store, `[Ballot] UpdateSlate Success Contest/Ballot: ${ballot.contestId}/${ballot.id} `, {
+        updateState(store, `[Ballot] UpdateVoter Slate Success`, {
           voterSlates: updatedAuthorSlates,
           voterSlate: ballot,
+          isLoading: false,
         });
       },
       async setStartupLoadingComplete(state: boolean) {
@@ -90,10 +89,10 @@ export const BallotStore = signalStore(
     };
   }),
 
-  withHooks({
-    async onInit({ getAllContests, setStartupLoadingComplete }) {
-      await getAllContests();
-      await setStartupLoadingComplete(true);
+  withHooks(store => ({
+    onInit: async () => {
+      await store.getAllContests();
+      await store.setStartupLoadingComplete(true);
     },
-  })
+  }))
 );

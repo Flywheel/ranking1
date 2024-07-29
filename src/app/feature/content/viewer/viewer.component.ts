@@ -11,24 +11,18 @@ import { MediaParserService } from '../../../core/media/media-parser.service';
   styleUrl: './viewer.component.scss',
 })
 export class ViewerComponent {
-  id = input<string>();
+  mediaType = input<string>();
+  sourceId = input<string>();
   mediaService = inject(MediaParserService);
 
-  // deserialize data from id into Asset object containing mediaType and location, then get url and paddingBottom
   assetData = computed<AssetView>(() => {
-    const assetInput = this.id();
-    // test console.log('ViewerComponent initialized with id:', this.id());
-    if (assetInput) {
-      const pos = assetInput.indexOf('..i..');
-      const mediaType = assetInput.substring(0, pos);
-      const location = assetInput.substring(pos + 5);
-      const prepAssetView = this.mediaService.parseMedia({ mediaType, sourceId: location });
-
-      // test console.log('assetData2', assetData, '; url', url, '; paddingBottom', paddingBottom);
+    const mediaType = this.mediaType();
+    const sourceId = this.sourceId();
+    if (sourceId && mediaType) {
+      const prepAssetView = this.mediaService.parseMedia({ mediaType, sourceId });
       return prepAssetView;
     }
-    // test console.log('assetData2', { mediaType: '', location: '', url: '', paddingBottom: '' });
-    return { mediaType: 'Error', sourceId: 'Url has input id', url: '', paddingBottom: 'ERROR ABOVE' };
+    return { mediaType: this.mediaType() ?? 'ERROR', sourceId: this.sourceId() ?? 'ERROR', url: '', paddingBottom: '' };
   });
 
   sanitizer = inject(DomSanitizer);
@@ -39,7 +33,7 @@ export class ViewerComponent {
     this.location.back();
   }
 
-  logGen() {
+  logToConsole() {
     console.log(this.assetData());
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { SlateMemberView, SlateView } from '../models';
 import {
   CdkDrag,
@@ -13,12 +13,11 @@ import { BallotStore } from '../ballot.store';
 import { RouterLink } from '@angular/router';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { ViewerComponent } from '../../content/viewer/viewer.component';
 
 @Component({
   selector: 'app-ballot-page',
   standalone: true,
-  imports: [CdkDrag, CdkDropList, CdkDropListGroup, CdkDragHandle, RouterLink, CommonModule, ViewerComponent],
+  imports: [CdkDrag, CdkDropList, CdkDropListGroup, CdkDragHandle, RouterLink, CommonModule],
   templateUrl: './ballot-page.component.html',
   styleUrl: './ballot-page.component.scss',
 })
@@ -26,6 +25,7 @@ export class BallotPageComponent implements OnInit {
   ballotStore = inject(BallotStore);
   id = input<string>();
   selectedContest = signal<string>('');
+  selectedCandidateId = signal<number>(0);
 
   candidatesAvailable = signal<SlateMemberView[]>([]);
   candidatesRanked = signal<SlateMemberView[]>([]);
@@ -33,6 +33,12 @@ export class BallotPageComponent implements OnInit {
   preparedBallot = signal<SlateView>({ id: 0, contestId: 0, authorId: 0, slateMemberViews: [] });
   isReady$ = toObservable(this.ballotStore.isStartupLoadingComplete);
 
+  contentParams = computed<string>(() => {
+    const selected = this.ballotStore
+      .contestSlate()
+      .slateMemberViews.filter(candidate => candidate.candidateId === this.selectedCandidateId())[0];
+    return selected ? selected.asset.mediaType + '..i..' + selected.asset.sourceId : '';
+  });
   ngOnInit() {
     const ballotId = this.id() ? Number(this.id()) : 1;
     this.isReady$.subscribe(completed => {

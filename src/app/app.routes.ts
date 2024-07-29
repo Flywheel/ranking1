@@ -6,11 +6,7 @@ export const routes: Routes = [
     loadComponent: () => import('./feature/ballot/ballot-page/ballot-page.component').then(m => m.BallotPageComponent),
   },
   {
-    path: 'content',
-    loadComponent: () => import('./feature/content/viewer/viewer.component').then(m => m.ViewerComponent),
-  },
-  {
-    path: 'content/:id',
+    path: 'content/:mediaType/:sourceId',
     loadComponent: () => import('./feature/content/viewer/viewer.component').then(m => m.ViewerComponent),
   },
   { path: '', redirectTo: 'ballot', pathMatch: 'full' },
